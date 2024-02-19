@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FincodeTest</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <script src="https://js.test.fincode.jp/v1/fincode.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
