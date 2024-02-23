@@ -1,0 +1,33 @@
+Payment id: <%= @payment.id %><br />
+Status: <%= @payment.status %><br />
+Fincode Payment id: <%= @payment.fincode_payment_id %><br />
+Fincode Payment Access id: <%= @payment.fincode_payment_access_id %><br />
+Amount: <%= @payment.amount %><br />
+Actual Amount: <%= @payment.actual_amount %><br />
+<br />
+<% @payment.refunds.each_with_index do |refund, index| %>
+  <b>Refund <%= index + 1 %></b><br />
+  id: <%= refund.id %><br />
+  status: <%= refund.status %><br />
+  amount: <%= refund.amount %><br />
+<% end %>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<% if @payment.completed? %>
+  <%= form_with url: refund_payment_path(id: @payment.id), method: :get do |form| %>
+    <%= form.label :amount, "Refund:" %>
+    <%= form.text_field :amount %>
+    <%= form.submit "submit" %>
+  <% end %>
+<% elsif @payment.authorized? %>
+  <%= form_with url: refund_payment_path(id: @payment.id), method: :get do |form| %>
+    <%= form.label :amount, "Refund:" %>
+    <%= form.text_field :amount %>
+    <%= form.submit "submit" %>
+  <% end %>
+  <%= link_to "Capture", capture_after_auth_payment_path(id: @payment.id) %>
+<% end %>

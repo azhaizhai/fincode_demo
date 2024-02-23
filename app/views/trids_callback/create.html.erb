@@ -1,0 +1,6 @@
+<% if @url.present? %>
+  <%= link_to "3DS Auth", @url %>
+<% else %>
+  Payment id: <%= @payment.id %><br />
+  Payment Status: <%= @payment.status %><br />
+<% end %>

@@ -1,29 +1,35 @@
+<form>
+card no: <input type="text" id="card_no"><br />
+expire: <input type="text" id="expire"><br />
+security code: <input type="text" id="cvv"><br />
+<button id="submit">submit</button>
+</form>
 <script>
-  const card = {
-    card_no : "<%= ENV["FINCODE_SANBOX_CREDIT_CARD"] %>",
-    expire : "2412",
-    security_code: "123",
-    customer_id: "<%= @fincode_customer_id %>",
-    default_flag: "1" //1:ON;0:OFF
-  }
-  let fincode = Fincode('<%= ENV['FINCODE_PUBLIC_KEY'] %>')
-  fincode.setTenantShopId('<%= ENV['TENANT_ID'] %>')
-  fincode.cards(card,
-      function (status, response) {
-          if (200 === status) {
-              console.log(response);
-              $.post('/bind_cards',
-                response,
-                function(data, status, jqXHR) {// success callback
-                 alert("credit_card_id: " + data["credit_card_id"]);
-                }
-              )
-          } else {
-              // リクエストエラー時の処理
-          }
-      },
-      function () {
-          // 通信エラー処理
-      }
-  );
+  $("#submit").click(function(){
+    const card = {
+      card_no : $("#card_no").val(),
+      expire : $("#expire").val(),
+      security_code: $("#cvv").val()
+    }
+    let fincode = Fincode('<%= ENV['FINCODE_PUBLIC_KEY'] %>')
+    fincode.setTenantShopId('<%= ENV['TENANT_ID'] %>')
+    fincode.tokens(card,
+        function (status, response) {
+            if (200 === status) {
+                console.log(response);
+                $.post('/bind_cards',
+                  response,
+                  function(data, status, jqXHR) {// success callback
+                    alert("credit_card_id: " + data["credit_card_id"]);
+                  }
+                )
+            } else {
+                alert("status code: " + status);// リクエストエラー時の処理
+            }
+        },
+        function () {
+            alert("generate token error");// 通信エラー処理
+        }
+    );
+  });
 </script>

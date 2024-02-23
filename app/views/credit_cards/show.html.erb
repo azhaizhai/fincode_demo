@@ -1,0 +1,4 @@
+Credit Card id: <%= @credit_card.id %><br />
+<%= link_to "Create new auth payment", new_auth_payment_credit_card_path(id: @credit_card.id) %><br />
+<%= link_to "Create new capture payment", new_capture_payment_credit_card_path(id: @credit_card.id) %><br />
+<%= link_to "Create 3D Secure payment", new_3ds_payment_credit_card_path(id: @credit_card.id) %><br />

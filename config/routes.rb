@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   resources :bind_cards, only: [:index, :create]
 
-  resources :payments, only: [] do
+  resources :payments, only: [:show] do
     member do
       get :capture_after_auth
       get :refund
@@ -18,6 +18,17 @@ Rails.application.routes.draw do
     collection do
       get :capture
       get :auth
+      get :pre_3ds
     end
   end
+
+  resources :webhook, only: [:create]
+  resources :credit_cards, only: [:show] do
+    member do
+      get :new_auth_payment
+      get :new_capture_payment
+      get :new_3ds_payment
+    end
+  end
+  resources :trids_callback, only: [:create]
 end

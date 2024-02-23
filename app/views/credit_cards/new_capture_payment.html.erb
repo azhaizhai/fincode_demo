@@ -1,0 +1,6 @@
+<%= form_with url: capture_payments_path, method: :get do |form| %>
+  <%= form.label :amount, "Amount:" %>
+  <%= form.text_field :amount %>
+  <%= form.hidden_field :credit_card_id, value: @credit_card.id %>
+  <%= form.submit "submit" %>
+<% end %>
